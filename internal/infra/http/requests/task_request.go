@@ -28,3 +28,13 @@ func (r TaskRequest) ToDomainModel() (interface{}, error) {
 		Deadline:    deadline,
 	}, nil
 }
+
+type UpdateTaskStatusRequest struct {
+	Status domain.TaskStatus `json:"status" validate:"required"`
+}
+
+func (r UpdateTaskStatusRequest) ToDomainModel() (interface{}, error) {
+	return domain.Task{
+		Status: r.Status,
+	}, nil
+}

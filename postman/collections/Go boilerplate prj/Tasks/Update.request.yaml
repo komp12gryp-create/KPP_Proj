@@ -1,6 +1,6 @@
 $kind: http-request
 name: Update
-url: "{{base_url}}/tasks/{{taskId}}"
+url: "{{base_url}}/tasks/{{taskId}}/"
 method: PUT
 body:
   type: json

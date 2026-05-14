@@ -6,9 +6,9 @@ body:
   type: json
   content: "{\r
 
-    \    \"title\": \"Погодувати кота\",\r
+    \    \"title\": \"Погодувати кота2\",\r
 
-    \    \"description\": \"Купити корм Sheba з морською рибою в АТБ\",\r
+    \    \"description\": \"Купити корм Sheba з морською рибою в АТБ2\",\r
 
     \    \"deadline\": 1778000400\r
 

@@ -84,7 +84,38 @@ func (c TaskController) Find() http.HandlerFunc {
 	}
 }
 
-//todo: add method to change (update) Task Status
+func (c TaskController) UpdateStatus() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		user := r.Context().Value(UserKey).(domain.User)
+		task := r.Context().Value(TaskKey).(domain.Task)
+
+		if task.UserId != user.Id {
+			Forbidden(w, errors.New("access denied"))
+			return
+		}
+
+		updTask, err := requests.Bind(r, requests.UpdateTaskStatusRequest{}, domain.Task{})
+		if err != nil {
+			log.Printf("TaskController.UpdateStatus(requests.Bind): %s", err)
+			BadRequest(w, errors.New("invalid request body"))
+			return
+		}
+
+		task.Status = updTask.Status
+
+		task, err = c.taskService.UpdateStatus(task)
+		if err != nil {
+			log.Printf("TaskController.UpdateStatus(c.taskService.UpdateStatus): %s", err)
+			InternalServerError(w, err)
+			return
+		}
+
+		taskDto := resources.TaskDto{}
+		taskDto = taskDto.DomainToDto(task)
+
+		Success(w, taskDto)
+	}
+}
 
 func (c TaskController) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

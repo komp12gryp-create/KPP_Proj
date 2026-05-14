@@ -12,6 +12,7 @@ type TaskService interface {
 	FindList(uId uint64) ([]domain.Task, error)
 	Find(id uint64) (interface{}, error)
 	Update(t domain.Task) (domain.Task, error)
+	UpdateStatus(t domain.Task) (domain.Task, error)
 	Delete(id uint64) error
 }
 
@@ -60,6 +61,16 @@ func (s taskService) Update(t domain.Task) (domain.Task, error) {
 	task, err := s.taskRepo.Update(t)
 	if err != nil {
 		log.Printf("taskService.Update(s.taskRepo.Update): %s", err)
+		return domain.Task{}, err
+	}
+
+	return task, nil
+}
+
+func (s taskService) UpdateStatus(t domain.Task) (domain.Task, error) {
+	task, err := s.taskRepo.UpdateStatus(t)
+	if err != nil {
+		log.Printf("taskService.UpdateStatus(s.taskRepo.UpdateStatus): %s", err)
 		return domain.Task{}, err
 	}
 

@@ -1,5 +1,5 @@
 $kind: http-request
 name: Find
-url: '{{base_url}}/tasks/{{taskId}}'
+url: "{{base_url}}/tasks/{{taskId}}/"
 method: GET
 order: 3488246156042850

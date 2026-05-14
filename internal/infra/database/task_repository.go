@@ -26,6 +26,7 @@ type TaskRepository interface {
 	FindList(uId uint64) ([]domain.Task, error)
 	Find(id uint64) (domain.Task, error)
 	Update(t domain.Task) (domain.Task, error)
+	UpdateStatus(t domain.Task) (domain.Task, error)
 	Delete(id uint64) error
 }
 
@@ -96,6 +97,18 @@ func (r taskRepository) Update(t domain.Task) (domain.Task, error) {
 
 	t = r.mapModelToDomain(tsk)
 	return t, nil
+}
+
+func (r taskRepository) UpdateStatus(t domain.Task) (domain.Task, error) {
+	err := r.coll.Find(db.Cond{"id": t.Id, "deleted_date": nil}).Update(map[string]interface{}{
+		"status":       t.Status,
+		"updated_date": time.Now(),
+	})
+	if err != nil {
+		return domain.Task{}, err
+	}
+
+	return r.Find(t.Id)
 }
 
 func (r taskRepository) Delete(id uint64) error {

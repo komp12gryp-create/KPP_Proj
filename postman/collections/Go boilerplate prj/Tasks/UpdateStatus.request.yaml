@@ -1,0 +1,12 @@
+$kind: http-request
+name: UpdateStatus
+url: "{{base_url}}/tasks/{{taskId}}/status"
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \    \"status\": \"IN_PROGRESS\"\r
+
+    }"
+order: 3729413535209925
