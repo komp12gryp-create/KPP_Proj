@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{base_url}}/users"
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+        "name": ""
+    }
+order: 1000

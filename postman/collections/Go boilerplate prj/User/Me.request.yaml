@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{base_url}}/users"
+method: GET
+headers:
+  Content-Type: application/json
+  Access-Control-Request-Method: GET
+  Access-Control-Request-Headers: Content-Type
+  Origin: http://foo.example
+order: 3000

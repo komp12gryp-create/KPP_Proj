@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{base_url}}/auth/logout"
+method: POST
+headers:
+  access-control-request-headers: authorization,content-type
+  access-control-request-method: GET
+  origin: http://192.168.0.111:8100
+scripts:
+  - type: afterResponse
+    code: pm.environment.set("token", null);
+    language: text/javascript
+order: 3000

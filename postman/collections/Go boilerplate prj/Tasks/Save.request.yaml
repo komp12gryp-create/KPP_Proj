@@ -1,0 +1,16 @@
+$kind: http-request
+name: Save
+url: "{{base_url}}/tasks"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"title\": \"Погодувати кота\",\r
+
+    \    \"description\": \"Купити корм Sheba з морською рибою в АТБ\",\r
+
+    \    \"deadline\": 1778000400\r
+
+    }"
+order: 1778777710059

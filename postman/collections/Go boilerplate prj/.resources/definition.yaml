@@ -1,0 +1,9 @@
+$kind: collection
+variables:
+  base_url: localhost:8080/api/v1
+auth:
+  - id: 2a5f9393-97e3-4e15-b1eb-37f748ccc1b1
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{token}}"

@@ -1,0 +1,13 @@
+# Use this workspace to collaborate
+workspace:
+  id: 8f1f014b-2c8e-4f1f-8876-d7deb7f5c5da
+
+cloudResources:
+  collections:
+    ..\postman\collections\Go boilerplate prj: 54629543-fab0-4b38-a62c-3f5132ced48b
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

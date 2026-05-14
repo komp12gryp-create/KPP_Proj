@@ -1,0 +1,22 @@
+$kind: http-request
+name: Register
+url: "{{base_url}}/auth/register"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "email": "saSSS@test.com",
+        "password": "1234",
+        "firstName": "MyfirstName",
+        "secondName": "MysecondName"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: "let jsonData = pm.response.json();\r
+
+      pm.environment.set(\"token\", jsonData.token);"
+    language: text/javascript
+order: 1000
