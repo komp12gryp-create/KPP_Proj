@@ -75,13 +75,7 @@ func (c TaskController) FindList() http.HandlerFunc {
 
 func (c TaskController) Find() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user := r.Context().Value(UserKey).(domain.User)
 		task := r.Context().Value(TaskKey).(domain.Task)
-
-		if task.UserId != user.Id {
-			Forbidden(w, errors.New("access denied"))
-			return
-		}
 
 		taskDto := resources.TaskDto{}
 		taskDto = taskDto.DomainToDto(task)
@@ -92,13 +86,7 @@ func (c TaskController) Find() http.HandlerFunc {
 
 func (c TaskController) UpdateStatus() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user := r.Context().Value(UserKey).(domain.User)
 		task := r.Context().Value(TaskKey).(domain.Task)
-
-		if task.UserId != user.Id {
-			Forbidden(w, errors.New("access denied"))
-			return
-		}
 
 		updTask, err := requests.Bind(r, requests.UpdateTaskStatusRequest{}, domain.Task{})
 		if err != nil {
@@ -125,13 +113,7 @@ func (c TaskController) UpdateStatus() http.HandlerFunc {
 
 func (c TaskController) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user := r.Context().Value(UserKey).(domain.User)
 		task := r.Context().Value(TaskKey).(domain.Task)
-
-		if task.UserId != user.Id {
-			Forbidden(w, errors.New("access denied"))
-			return
-		}
 
 		updTask, err := requests.Bind(r, requests.TaskRequest{}, domain.Task{})
 		if err != nil {
@@ -160,13 +142,7 @@ func (c TaskController) Update() http.HandlerFunc {
 
 func (c TaskController) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user := r.Context().Value(UserKey).(domain.User)
 		task := r.Context().Value(TaskKey).(domain.Task)
-
-		if task.UserId != user.Id {
-			Forbidden(w, errors.New("access denied"))
-			return
-		}
 
 		err := c.taskService.Delete(task.Id)
 		if err != nil {
