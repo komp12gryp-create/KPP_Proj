@@ -52,8 +52,14 @@ func (c TaskController) FindList() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		user := r.Context().Value(UserKey).(domain.User)
 
-		//todo: add filters for FindList, and sorting cryteria
-		tasks, err := c.taskService.FindList(user.Id)
+		f, err := requests.ParseTaskFilter(r)
+		if err != nil {
+			log.Printf("TaskController.FindList(requests.ParseTaskFilter): %s", err)
+			BadRequest(w, err)
+			return
+		}
+
+		tasks, err := c.taskService.FindList(user.Id, f)
 		if err != nil {
 			log.Printf("TaskController.FindList(c.taskService.FindList): %s", err)
 			InternalServerError(w, err)

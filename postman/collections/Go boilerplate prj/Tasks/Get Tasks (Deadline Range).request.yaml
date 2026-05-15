@@ -1,0 +1,8 @@
+$kind: http-request
+name: Get Tasks (Deadline Range)
+url: "{{base_url}}/tasks?deadline_from=1768000400&deadline_to=1778900000"
+method: GET
+queryParams:
+  deadline_from: "1768000400"
+  deadline_to: "1778900000"
+order: 4379280795001339

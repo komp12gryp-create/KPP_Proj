@@ -1,0 +1,7 @@
+$kind: http-request
+name: Get Tasks (Created Today)
+url: "{{base_url}}/tasks?created_date=today"
+method: GET
+queryParams:
+  created_date: today
+order: 4392475133914748

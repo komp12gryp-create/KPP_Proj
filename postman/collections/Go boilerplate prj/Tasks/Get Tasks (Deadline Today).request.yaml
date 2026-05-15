@@ -1,0 +1,7 @@
+$kind: http-request
+name: Get Tasks (Deadline Today)
+url: "{{base_url}}/tasks?deadline=today"
+method: GET
+queryParams:
+  deadline: today
+order: 4360282224840637

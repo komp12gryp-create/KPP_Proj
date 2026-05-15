@@ -23,7 +23,7 @@ type task struct {
 
 type TaskRepository interface {
 	Save(t domain.Task) (domain.Task, error)
-	FindList(uId uint64) ([]domain.Task, error)
+	FindList(uId uint64, f domain.TaskFilter) ([]domain.Task, error)
 	Find(id uint64) (domain.Task, error)
 	Update(t domain.Task) (domain.Task, error)
 	UpdateStatus(t domain.Task) (domain.Task, error)
@@ -56,18 +56,45 @@ func (r taskRepository) Save(t domain.Task) (domain.Task, error) {
 	return t, nil
 }
 
-func (r taskRepository) FindList(uId uint64) ([]domain.Task, error) {
-	//todo: add filters (date, status, deadline, etc.)
-	//todo: add sorting (deadline, create_date, etc.)
-	var tasks []task
+func (r taskRepository) FindList(uId uint64, f domain.TaskFilter) ([]domain.Task, error) {
+	cond := db.And(
+		db.Cond{"user_id": uId},
+		db.Cond{"deleted_date": nil},
+	)
 
-	err := r.coll.
-		Find(db.Cond{
-			"user_id":      uId,
-			"deleted_date": nil,
-		}).
-		//OrderBy(param)
-		All(&tasks)
+	if f.Status != nil {
+		cond = cond.And(db.Cond{"status": *f.Status})
+	}
+	if f.DeadlineFrom != nil {
+		cond = cond.And(db.Cond{"deadline >=": *f.DeadlineFrom})
+	}
+	if f.DeadlineTo != nil {
+		cond = cond.And(db.Cond{"deadline <=": *f.DeadlineTo})
+	}
+	if f.CreatedFrom != nil {
+		cond = cond.And(db.Cond{"created_date >=": *f.CreatedFrom})
+	}
+	if f.CreatedTo != nil {
+		cond = cond.And(db.Cond{"created_date <=": *f.CreatedTo})
+	}
+
+	var tasks []task
+	q := r.coll.Find(cond)
+
+	if f.SortBy != "" {
+		orderBy := string(f.SortBy)
+		if f.SortOrder == domain.SortOrderDesc {
+			orderBy = "-" + orderBy
+		}
+		q = q.OrderBy(orderBy)
+	}
+
+	if f.Pagination != nil {
+		q = q.Paginate(uint(f.Pagination.CountPerPage)).
+			Page(uint(f.Pagination.Page))
+	}
+
+	err := q.All(&tasks)
 	if err != nil {
 		return nil, err
 	}

@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get Tasks (Combined Filter & Sort & Pagination)
+url: "{{base_url}}/tasks?status=IN_PROGRESS&created_date=today&sort_by=deadline&sort_order=desc&page=1&count_per_page=3"
+method: GET
+queryParams:
+  status: IN_PROGRESS
+  created_date: today
+  sort_by: deadline
+  sort_order: desc
+  page: "1"
+  count_per_page: "3"
+order: 4483657566414844

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Get Tasks by Status
+url: "{{base_url}}/tasks?status=NEW"
+method: GET
+queryParams:
+  status: NEW
+order: 4358176197974896

@@ -107,6 +107,7 @@ func UserRouter(r chi.Router, uc controllers.UserController) {
 func TaskRouter(r chi.Router, tc controllers.TaskController, ts app.TaskService) {
 	tpom := middlewares.PathObject("taskId", controllers.TaskKey, ts)
 	r.Route("/tasks", func(apiRouter chi.Router) {
+		apiRouter.Get("/", tc.FindList())
 		apiRouter.Post("/", tc.Save())
 		apiRouter.With(tpom).Get("/{taskId}", tc.Find())
 		apiRouter.With(tpom).Put("/{taskId}", tc.Update())

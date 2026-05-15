@@ -1,0 +1,8 @@
+$kind: http-request
+name: Get Tasks (Sorted)
+url: "{{base_url}}/tasks?sort_by=deadline&sort_order=desc"
+method: GET
+queryParams:
+  sort_by: deadline
+  sort_order: desc
+order: 4471498838150282
